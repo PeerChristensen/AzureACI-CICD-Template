@@ -12,6 +12,9 @@ on:
       build_number:
         required: true
         type: string
+      short_name:
+        required: true
+        type: string
         
 
 jobs:
