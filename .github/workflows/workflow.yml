@@ -35,7 +35,6 @@ jobs:
       environment: Prod
       resource_group: ${{ needs.vars.outputs.resource_group }}
       acr_name: ${{ needs.vars.outputs.acr_name }}
-
     secrets:
       azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
@@ -48,6 +47,8 @@ jobs:
       acr_name: ${{ needs.vars.outputs.acr_name }}
       short_name: ${{ needs.vars.outputs.short_name }}
       build_number: ${{ github.run_number }}
+    secrets:
+      azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
 
 
