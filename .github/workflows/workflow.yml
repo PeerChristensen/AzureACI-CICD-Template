@@ -18,7 +18,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     with:
       environment: Test
-      resource_group: echo '${{ env.RESOURCEGROUP_NAME }}-Test'
+      resource_group: ${{ env.RESOURCEGROUP_NAME }}-Test
       acr_name: ${{ env.REGISTRY_NAME }}-Test
       creds: ${{ secrets.AZURE_CREDENTIALS_TEST }}
 
