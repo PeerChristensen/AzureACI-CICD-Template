@@ -3,8 +3,8 @@ name: Deploy container registry and docker image
 concurrency: container-deploy-workflow
 
 env:
-    RESOURCEGROUP_NAME: container-rg
-    REGISTRY_NAME: container-acr
+  RESOURCEGROUP_NAME: container-rg
+  REGISTRY_NAME: container-acr
 
 on: 
   push:
@@ -18,7 +18,7 @@ jobs:
     uses: ./.github/workflows/deploy_acr.yml
     if: github.ref == 'refs/heads/main'
     with:
-      environment:  Test
+      environment: Test
       resource_group: ${{ env.RESOURCEGROUP_NAME }}-Test
       acr_name: ${{ env.REGISTRY_NAME }}
       creds: ${{secrets.AZURE_CREDENTIALS_TEST}}
@@ -28,7 +28,7 @@ jobs:
     uses: ./.github/workflows/deploy_acr.yml
     if: github.ref == 'refs/heads/main'
     with:
-      environment:  Prod
+      environment: Prod
       resource_group: ${{ env.RESOURCEGROUP_NAME }}-Prod
       acr_name: ${{ env.REGISTRY_NAME }}
       creds: ${{secrets.AZURE_CREDENTIALS_PROD}}
