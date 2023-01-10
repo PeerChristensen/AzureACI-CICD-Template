@@ -12,9 +12,9 @@ on:
       acr_name:
         required: true
         type: string
-#      creds:
-#        required: true
-#        type: string
+      creds:
+        required: true
+        type: string
 
 permissions:
   id-token: write
@@ -27,7 +27,7 @@ jobs:
     environment: ${{ inputs.environment }}
     steps:
       - uses: actions/checkout@v2
-      - uses: azure/actions/login@v1
+      - uses: azure/login@v1
         env:
           creds: ${{ inputs.creds }}
         with:   
