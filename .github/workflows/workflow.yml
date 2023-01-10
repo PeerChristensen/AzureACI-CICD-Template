@@ -20,6 +20,7 @@ jobs:
     steps:
       - run: echo "Exposing env vars"
   deploy-acr-test:
+    needs: vars
     uses: ./.github/workflows/deploy_acr.yml
     if: github.ref == 'refs/heads/main'
     with:
