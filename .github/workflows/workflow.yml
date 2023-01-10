@@ -2,10 +2,6 @@ name: Deploy container registry and docker image
 
 concurrency: container-deploy-workflow
 
-env:
-  RESOURCEGROUP_NAME: container-rg
-  REGISTRY_NAME: container-acr
-
 on: 
   push:
     branches: 
@@ -14,11 +10,14 @@ on:
       
 jobs:
   deploy-acr-test:
+    env:
+      RESOURCEGROUP_NAME: container-rg
+      REGISTRY_NAME: container-acr
     uses: ./.github/workflows/deploy_acr.yml
     if: github.ref == 'refs/heads/main'
     with:
       environment: Test
-      resource_group: $RESOURCEGROUP_NAME
+      resource_group: ${{ RESOURCEGROUP_NAME }}-Test
       acr_name: ${{ env.REGISTRY_NAME }}-Test
       creds: ${{ secrets.AZURE_CREDENTIALS_TEST }}
 
