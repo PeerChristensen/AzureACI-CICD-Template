@@ -22,7 +22,6 @@ jobs:
     name: Build and push container
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
-    needs: deploy-acr
     steps:
       - uses: actions/checkout@v2
 
