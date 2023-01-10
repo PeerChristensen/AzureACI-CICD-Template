@@ -4,7 +4,7 @@ concurrency: container-deploy-workflow
 
 env:
   RESOURCEGROUP_NAME: container-rg
-  REGISTRY_NAME: container-acr
+  REGISTRY_NAME: containeracr
 
 permissions:
   id-token: write
@@ -32,7 +32,7 @@ jobs:
     with:
       environment: Test
       resource_group: ${{ needs.vars.outputs.resource_group }}-test
-      acr_name: ${{ needs.vars.outputs.acr_name }}-test
+      acr_name: ${{ needs.vars.outputs.acr_name }}test
 
     secrets:
       azure_credentials: ${{ secrets.AZURE_CREDENTIALS_TEST }}
