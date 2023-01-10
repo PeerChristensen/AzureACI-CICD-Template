@@ -3,6 +3,9 @@ name: Build and push container
 on: 
   workflow_call:
     inputs:
+      environment:
+        required: true
+        type: string
       acr_name:
         required: true
         type: string

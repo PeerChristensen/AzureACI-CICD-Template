@@ -12,13 +12,7 @@ on:
       acr_name:
         required: true
         type: string
-      vm_size:
-        required: true
-        type: string
-      build_number:
-        required: true
-        type: string
-        
+
     secrets:
       azure_credentials:
         required: true
