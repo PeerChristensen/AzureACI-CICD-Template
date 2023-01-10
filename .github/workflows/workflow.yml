@@ -33,7 +33,7 @@ jobs:
       environment: Test
       resource_group: ${{ needs.vars.outputs.resource_group }}-test
       acr_name: ${{ needs.vars.outputs.acr_name }}-test
-      creds: inherit
+      creds: ${{ needs.vars.outputs.creds }}
 
 #  deploy-acr-prod:
 #    needs: deploy-acr-test

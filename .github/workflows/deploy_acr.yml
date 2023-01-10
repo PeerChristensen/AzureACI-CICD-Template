@@ -28,8 +28,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: azure/actions/login@v1
-        with:
-          creds: ${{ inputs.creds }}
+        env:
+          CREDENTIALS: ${{ input.creds }}
+        with:   
+          creds: ${{ env.creds }}
       - name: Deploy bicep
         uses: azure/arm-deploy@v1
         with:
