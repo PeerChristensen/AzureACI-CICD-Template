@@ -4,7 +4,7 @@ concurrency: container-deploy-workflow
 
 env:
   RESOURCEGROUP_NAME: container-rg-test
-  REGISTRY_NAME: containeracr
+  REGISTRY_NAME: containeracrpch
 
 permissions:
   id-token: write
