@@ -29,7 +29,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS_TEST }}
+          creds: ${{ inputs.creds }}
       - name: Deploy bicep
         uses: azure/arm-deploy@v1
         with:
