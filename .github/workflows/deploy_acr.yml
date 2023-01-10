@@ -27,7 +27,7 @@ jobs:
     environment: ${{ inputs.environment }}
     steps:
       - uses: actions/checkout@v2
-      - uses: azure/login@v1
+      - uses: azure/actions/login@v1
         with:
           creds: ${{ inputs.creds }}
       - name: Deploy bicep
