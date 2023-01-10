@@ -22,7 +22,7 @@ jobs:
     outputs:
       resource_group: ${{ env.RESOURCEGROUP_NAME }}
       acr_name: ${{ env.REGISTRY_NAME }}
-      creds: ${{ secrets.AZURE_CREDENTIALS_TEST }}
+    #  creds: ${{ secrets.AZURE_CREDENTIALS_TEST }}
     steps:
       - run: echo "Exposing env vars"
   deploy-acr-test:
