@@ -15,6 +15,9 @@ on:
       short_name:
         required: true
         type: string
+    secrets:
+      azure_credentials:
+        required: true
         
 
 jobs:
