@@ -2,6 +2,10 @@ name: Deploy container registry and docker image
 
 concurrency: container-deploy-workflow
 
+env:
+  RESOURCEGROUP_NAME: container-rg
+  REGISTRY_NAME: container-acr
+
 on: 
   push:
     branches: 
@@ -9,15 +13,18 @@ on:
   workflow_dispatch:
       
 jobs:
+  vars:
+    runs-on: ubuntu-latest
+    outputs:
+      resource_group: ${{ env.RESOURCEGROUP_NAME }}
+    steps:
+      - run: echo "Exposing env vars"
   deploy-acr-test:
-    env:
-      RESOURCEGROUP_NAME: container-rg
-      REGISTRY_NAME: container-acr
     uses: ./.github/workflows/deploy_acr.yml
     if: github.ref == 'refs/heads/main'
     with:
       environment: Test
-      resource_group: ${{ RESOURCEGROUP_NAME }}-Test
+      resource_group: ${{ needs.vars.outputs.resource_group }}-Test
       acr_name: ${{ env.REGISTRY_NAME }}-Test
       creds: ${{ secrets.AZURE_CREDENTIALS_TEST }}
 
