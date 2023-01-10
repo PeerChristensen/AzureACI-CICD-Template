@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       resource_group: ${{ env.RESOURCEGROUP_NAME }}
+      acr_name: ${{ env.REGISTRY_NAME }}
     steps:
       - run: echo "Exposing env vars"
   deploy-acr-test:
@@ -26,8 +27,8 @@ jobs:
     with:
       environment: Test
       resource_group: ${{ needs.vars.outputs.resource_group }}-Test
-      acr_name: ${{ env.REGISTRY_NAME }}-Test
-      creds: ${{ secrets.AZURE_CREDENTIALS_TEST }}
+      acr_name: ${{ needs.vars.outputs.acr_name }}-Test
+      #creds: ${{ secrets.AZURE_CREDENTIALS_TEST }}
 
   deploy-acr-prod:
     needs: deploy-acr-test
