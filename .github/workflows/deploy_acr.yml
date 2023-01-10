@@ -12,9 +12,9 @@ on:
       acr_name:
         required: true
         type: string
-      creds:
-        required: true
-        type: string
+ #     creds:
+ #       required: true
+ #       type: string
 
 permissions:
   id-token: write
@@ -30,8 +30,6 @@ jobs:
       - uses: azure/login@v1
         env:
           creds: ${{ secrets.AZURE_CREDENTIALS_TEST }}
-        with:   
-          creds: ${{ env.creds }}
       - name: Deploy bicep
         uses: azure/arm-deploy@v1
         with:
@@ -41,3 +39,9 @@ jobs:
             acrName=${{ inputs.acr_name }}
             acrSku=Basic
           failOnStdErr: false
+
+
+      with: # Set Azure credentials secret as an input
+        credentials: ${{ secrets.AZURE_CREDENTIALS }}
+      env: # Or as an environment variable
+        credentials: ${{ secrets.AZURE_CREDENTIALS }}
