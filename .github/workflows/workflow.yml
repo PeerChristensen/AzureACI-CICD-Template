@@ -26,9 +26,9 @@ jobs:
     if: github.ref == 'refs/heads/main'
     with:
       environment: Test
-      resource_group: ${{ needs.vars.outputs.resource_group }}-Test
-      acr_name: ${{ needs.vars.outputs.acr_name }}-Test
-      creds: ${{ secrets.AZURE_CREDENTIALS_TEST }}
+      resource_group: ${{ needs.vars.outputs.resource_group }}-test
+      acr_name: ${{ needs.vars.outputs.acr_name }}-test
+    secrets: inherit
 
 #  deploy-acr-prod:
 #    needs: deploy-acr-test
