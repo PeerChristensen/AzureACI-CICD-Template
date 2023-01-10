@@ -3,7 +3,7 @@ name: Deploy container registry and docker image
 concurrency: container-deploy-workflow
 
 env:
-  RESOURCEGROUP_NAME: container-rg
+  RESOURCEGROUP_NAME: container-rg-test
   REGISTRY_NAME: container-acr
 
 permissions:
