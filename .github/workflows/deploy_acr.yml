@@ -12,14 +12,17 @@ on:
       acr_name:
         required: true
         type: string
+      vm_size:
+        required: true
+        type: string
+      build_number:
+        required: true
+        type: string
+        
     secrets:
       azure_credentials:
         required: true
 
-
-#permissions:
-#  id-token: write
-#  contents: read
 
 jobs:
   deploy-acr:
@@ -40,3 +43,4 @@ jobs:
             acrName=${{ inputs.acr_name }}
             acrSku=Basic
           failOnStdErr: false
+      

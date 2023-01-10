@@ -1,0 +1,56 @@
+name: Build and push container
+
+on: 
+  workflow_call:
+    inputs:
+      acr_name:
+        required: true
+        type: string
+      build_number:
+        required: true
+        type: string
+        
+
+jobs:
+  build-push-container:
+    name: Build and push container
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    needs: deploy-acr
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.azure_credentials }}
+
+      - run: |
+          export username=$(az acr credential show --name ${{ inputs.acr_name }} --query 'username' --output tsv)
+          echo "::set-output name=acr_username::$username"
+        name: 'Get ACR username'
+        id: acr_username_step
+      
+      - run: |
+          password=$(az acr credential show --name ${{ inputs.acr_name }} --query 'passwords[0].value' --output tsv)
+          echo "::set-output name=acr_password::$password"
+        name: 'Get ACR Password'
+        id: acr_password_step
+      - id: acr-login
+        name: 'Login to ACR'
+        uses: azure/docker-login@v1
+        with:
+          login-server: '${{ inputs.acr_name }}.azurecr.io'
+          username: ${{ steps.acr_username_step.outputs.acr_username }}
+          password: ${{ steps.acr_password_step.outputs.acr_password }}
+
+      - id: build-push-image
+        name: 'Build and push image'
+        run: |
+          full_image_name=${{ inputs.acr_name }}.azurecr.io/${{ inputs.short_name }}-${{ inputs.environment }}-image:${{ inputs.build_number }}
+          docker build -t $full_image_name \
+            -f Dockerfile .
+          docker push $full_image_name
+    
+    outputs:
+      acr_username: ${{ steps.acr_username_step.outputs.acr_username }}
+      acr_password: ${{ steps.acr_password_step.outputs.acr_password }}
