@@ -6,6 +6,10 @@ env:
   RESOURCEGROUP_NAME: container-rg
   REGISTRY_NAME: container-acr
 
+permissions:
+  id-token: write
+  contents: read
+
 on: 
   push:
     branches: 
