@@ -1,1 +1,1 @@
-# AzureACI-CICD-Template
+# Continuous Integration and Depoyment for Docker Images and Azure container registries
