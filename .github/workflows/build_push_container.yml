@@ -38,7 +38,7 @@ jobs:
         id: acr_username_step
       
       - run: |                   
-          password=$(az acr credential show --name ${{ inputs.acr_name }} --query 'passwords[0].value' --output tsv)
+          password=$(az acr credential show --name containeracrpch --query 'passwords[0].value' --output tsv)
           echo "::set-output name=acr_password::$password"
         name: 'Get ACR Password'
         id: acr_password_step
