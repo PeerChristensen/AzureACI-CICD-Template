@@ -5,7 +5,7 @@ concurrency: container-deploy-workflow
 env:
   RESOURCEGROUP_NAME: container-rg-test
   REGISTRY_NAME: containeracrpch
-  SHORT_NAME: contacrpch
+  SHORT_NAME: contacrpch2
 
 permissions:
   id-token: write
