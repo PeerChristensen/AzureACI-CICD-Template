@@ -36,16 +36,16 @@ git commit -m "a short message describing any changes"
 git push
 ```
 
-Note that the GitHub workflow, which 
+Note that the GitHub Actions workflow, which builds and deploys your Docker container, is triggered by commits to the 'main' branch. You may therefore want to commit your work using feature branches. `git checkout -b feature_branch_name` and `git switch` are useful commands.
 
 ### Required changes
 
 Besides developing an R script, you will need to modify the following files:
 
-1. Dockerfile
+- Dockerfile
    1. Uncomment the line with the 'install.packages()' command **OR** use the script called install.packages.r to install the required packages.
    2. Make sure that COPY, RUN and CMD commands refer to the correct filename, e.g. if you call your main script something else than script.r.
-2. .github/workflows/workflow.yml
+- .github/workflows/workflow.yml
    1. set RESOURCEGROUP_NAME: name-of-your-resource group
    2. set REGISTRY_NAME: containerregistryname
       1. Note that is has to be lower case letters only
@@ -53,7 +53,30 @@ Besides developing an R script, you will need to modify the following files:
 
 ### Connecting GitHub to Azure
 
-For the pipeline to work, GitHub must be granted permission to make changes to your Azure environment.
+For the pipeline to work, GitHub must be granted permission to make changes to your Azure environment. This can be donw using the Azure CLI.
+
+1. First, login to Azure. The command opens a browser window with the Azure login page.
+
+```
+az login
+```
+
+The value for "id" in the JSON output will be your subscription id.
+
+2. Then, run the following command to create a Service Principal with contributor permissions to your resource group:
+
+```
+az ad sp create-for-rbac \
+      --name "gh-actions-aci-test" \
+      --role contributor \
+      --scopes /subscriptions/<your-subscription-id>/resourceGroups/container-rg-test \
+      --sdk-auth
+```
+
+3. Copy the JSON output.
+4. In your GitHub repo, go to Settings > Secrets and variables > Actions
+5. Create a new repository secret. It should be called AZURE_CREDENTIALS and its value should be the JSON string you just copied.
+
 
 ### Testing your Docker image locally
 
