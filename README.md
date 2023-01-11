@@ -6,7 +6,7 @@ This is a template repo that nay serve as a starting point for new workflows bas
 
 ## Getting started
 
-1. Clone the repo
+1. Clone the repos
 
 If using RStudio, the simplest approach might be to create a new project via version control.
 
