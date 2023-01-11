@@ -20,7 +20,7 @@ If using RStudio, the simplest approach might be to create a new project via ver
 1. Go to File > New Project > Version Control > Git
 2. Paste in the url for this repo and provide your own name for the project
 3. Click Create Project
-4. Open a command prompt in RStudio (it should open in the current working directory) and run the following commands.
+4. Open a terminal in RStudio (it should open in the current working directory) and run the following commands:
 
 ```
 git remote set-url origin https://github.com/PeerChristensen/testr.git
@@ -28,11 +28,11 @@ git push
 ```
 
 Your local project is now connected to your new GitHub repo.
-Changes can be committed through the RStudio interface or the command line, eg.g. as shown below.
+Changes can be committed through the RStudio interface or the command line, e.g. as shown below.
 
 ```
 git add .
-git commit -m "a short message describing what was changed"
+git commit -m "a short message describing any changes"
 git push
 ```
 
@@ -55,3 +55,13 @@ Besides developing an R script, you will need to modify the following files:
 
 For the pipeline to work, GitHub must be granted permission to make changes to your Azure environment.
 
+### Testing your Docker image locally
+
+The below commands build and run a Docker image.
+
+```
+docker build -t imagename .
+docker run imagename
+```
+
+ The -t (tag) parameter lets you provide a name for you Docker image. Make sure you're running these commands from the directory where the Dckerfile is located. The dot (.) indicates that the files and folders used to build the image are in the current directory.
