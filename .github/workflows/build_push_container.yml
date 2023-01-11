@@ -30,14 +30,14 @@ jobs:
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.azure_credentials }}
-
+      - run: echo "${{ inputs.acr_name }}"
       - run: |
           export username=$(az acr credential show --name containeracrpch --query 'username' --output tsv)
           echo "::set-output name=acr_username::$username"
         name: 'Get ACR username'
         id: acr_username_step
       
-      - run: |
+      - run: |                   
           password=$(az acr credential show --name ${{ inputs.acr_name }} --query 'passwords[0].value' --output tsv)
           echo "::set-output name=acr_password::$password"
         name: 'Get ACR Password'
