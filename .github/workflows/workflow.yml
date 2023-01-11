@@ -32,7 +32,7 @@ jobs:
  #   uses: ./.github/workflows/deploy_acr.yml
  #   if: github.ref == 'refs/heads/main'
  #   with:
- #     environment: Prod
+ #     environment: prod
  #     resource_group: ${{ needs.vars.outputs.resource_group }}
  #     acr_name: ${{ needs.vars.outputs.acr_name }}
  #   secrets:
@@ -43,7 +43,7 @@ jobs:
     uses: ./.github/workflows/build_push_container.yml
     if: github.ref == 'refs/heads/main'
     with:
-      environment: Prod
+      environment: prod
       acr_name: ${{ needs.vars.outputs.acr_name }}
       short_name: ${{ needs.vars.outputs.short_name }}
       build_number: ${{ github.run_number }}
