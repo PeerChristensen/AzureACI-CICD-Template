@@ -57,7 +57,7 @@ For the pipeline to work, GitHub must be granted permission to make changes to y
 
 ### Testing your Docker image locally
 
-The below commands build and run a Docker image.
+The below commands build and run a Docker image. You will need to have Docker Desktop installed.
 
 ```
 docker build -t imagename .
