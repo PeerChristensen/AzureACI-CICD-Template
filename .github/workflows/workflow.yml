@@ -39,7 +39,7 @@ jobs:
       azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
   build-push-container:
-    needs: vars
+    needs: [vars, deploy-acr]
     uses: ./.github/workflows/build_push_container.yml
     if: github.ref == 'refs/heads/main'
     with:
