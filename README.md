@@ -1,7 +1,6 @@
 # CICD Template for Docker Images running R jobs and Azure container registries
 
-[![Deploy ACR](https://github.com/PeerChristensen/AzureDocker-CICD-Template/actions/workflows/deploy_acr.yml/badge.svg)](https://github.com/PeerChristensen/AzureDocker-CICD-Template/actions/workflows/deploy_acr.yml)
-[![Build and push container](https://github.com/PeerChristensen/AzureDocker-CICD-Template/actions/workflows/build_push_container.yml/badge.svg)](https://github.com/PeerChristensen/AzureDocker-CICD-Template/actions/workflows/build_push_container.yml)
+[![Deploy container registry and docker image](https://github.com/PeerChristensen/AzureDocker-CICD-Template/actions/workflows/workflow.yml/badge.svg)](https://github.com/PeerChristensen/AzureDocker-CICD-Template/actions/workflows/workflow.yml)
 
 ## Description
 
