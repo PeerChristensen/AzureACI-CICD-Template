@@ -77,7 +77,6 @@ az ad sp create-for-rbac \
 4. In your GitHub repo, go to Settings > Secrets and variables > Actions
 5. Create a new repository secret. It should be called AZURE_CREDENTIALS and its value should be the JSON string you just copied.
 
-
 ### Testing your Docker image locally
 
 The below commands build and run a Docker image. You will need to have Docker Desktop installed.
@@ -88,3 +87,7 @@ docker run imagename
 ```
 
  The -t (tag) parameter lets you provide a name for you Docker image. Make sure you're running these commands from the directory where the Dckerfile is located. The dot (.) indicates that the files and folders used to build the image are in the current directory.
+
+# Starting/Stopping triggers in Dev
+
+If you wish to stop/start all triggers in Dev, run start_triggers.sh or stop_triggers.sh. Make sure triggers are active before publishing.
