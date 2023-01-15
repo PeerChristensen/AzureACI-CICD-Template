@@ -8,7 +8,7 @@ library(AzureKeyVault)
 print("Connecting to key vault")
 
 keyvault_uri <- "https://adf-iac-kv.vault.azure.net/"
-vault <- key_vault(keyvault_uri)
+vault <- key_vault(keyvault_uri, as_managed_identity=TRUE)
 
 access_key <- vault$secrets$get("ACCESSKEYSA")
 
