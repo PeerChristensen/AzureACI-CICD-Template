@@ -17,7 +17,8 @@ libssl-dev
 COPY script.r /script.r
 
 ## install packages with command
-#RUN R -e "install.packages(c('lubridate', 'AzureStor', 'dplyr', 'readr'))"
+#RUN R -e "install.packages(c('AzureStor', 'dplyr', 'readr', 'AzureKeyVault'))"
+
 
 ## install packages with R-script
 #COPY install_packages.r /tmp/install_packages.r
