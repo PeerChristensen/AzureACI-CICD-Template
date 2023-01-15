@@ -17,7 +17,7 @@ libssl-dev
 COPY script.r /script.r
 
 ## install packages with command
-RUN R -e "install.packages(c('AzureStor', 'dplyr', 'readr', 'AzureKeyVault'))"
+RUN R -e "install.packages(c('httpuv','AzureStor', 'dplyr', 'readr', 'AzureKeyVault'))"
 
 
 ## install packages with R-script
