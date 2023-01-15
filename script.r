@@ -15,7 +15,7 @@ access_key <- vault$secrets$get("ACCESSKEYSA")
 # connect to blob
 print("Connecting to blob container")
 
-endpoint  <- storage_endpoint("https://adfiacsa.blob.core.windows.net/",
+endpoint  <- storage_endpoint("https://adfiacsa.blob.core.windows.net",
                    key = access_key)
 
 container <- storage_container(endpoint, "input")
