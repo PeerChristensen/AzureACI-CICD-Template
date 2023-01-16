@@ -89,7 +89,3 @@ docker run imagename
 ```
 
  The -t (tag) parameter lets you provide a name for you Docker image. Make sure you're running these commands from the directory where the Dckerfile is located. The dot (.) indicates that the files and folders used to build the image are in the current directory.
-
-# Starting/Stopping triggers in Dev
-
-If you wish to stop/start all triggers in Dev, run start_triggers.sh or stop_triggers.sh. Make sure triggers are active before publishing.
