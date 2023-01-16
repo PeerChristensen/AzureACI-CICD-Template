@@ -10,13 +10,13 @@ print("Connecting to key vault")
 keyvault_uri <- "https://adf-iac-kv.vault.azure.net/"
 vault <- key_vault(keyvault_uri, as_managed_identity=TRUE)
 
-access_key <- vault$secrets$get("ACCESSKEYSA")$value
+access_key <- vault$secrets$get("ACCESSKEYSA")
 
 # connect to blob
 print("Connecting to blob container")
 
 endpoint  <- storage_endpoint("https://adfiacsa.blob.core.windows.net",
-                   key = access_key)
+                   key = access_key)$value
 
 container <- storage_container(endpoint, "input")
 
