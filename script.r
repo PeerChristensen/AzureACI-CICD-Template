@@ -33,8 +33,10 @@ output_file_name <- "output_data.csv"
 
 write_csv(df, output_file_name)
 
+container <- storage_container(endpoint, "output")
+
 storage_upload(
   container,
   src = output_file_name,
-  dest = "output/output_data.csv"
+  dest = "output_data.csv"
 )
