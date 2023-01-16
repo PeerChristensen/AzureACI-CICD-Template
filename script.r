@@ -21,7 +21,7 @@ endpoint  <- storage_endpoint("https://adfiacsa.blob.core.windows.net",
 container <- storage_container(endpoint, "input")
 
 input_file_name <- "input_data.csv"
-storage_download(container, "input/input_data.csv", input_file_name, overwrite=T)
+storage_download(container, "input_data.csv", input_file_name, overwrite=T)
 
 df <- read_csv(input_file_name)
 head(df)
