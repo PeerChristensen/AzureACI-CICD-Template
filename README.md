@@ -40,7 +40,7 @@ git push
 
 Note that the GitHub Actions workflow, which builds and deploys your Docker container, is triggered by commits to the 'main' branch. You may therefore want to commit your work using feature branches. `git checkout -b feature_branch_name` and `git switch` are useful commands.
 
-### Required changes
+### Required code changes
 
 Besides developing an R script, you will need to modify the following files:
 
@@ -89,3 +89,12 @@ docker run imagename
 ```
 
  The -t (tag) parameter lets you provide a name for you Docker image. Make sure you're running these commands from the directory where the Dckerfile is located. The dot (.) indicates that the files and folders used to build the image are in the current directory.
+
+## Post deployment setup
+
+1. Create a Container Instance in the Azure portal based on the uploaded image. 
+2. After it's successfully deployed, go to the new ACI resource > Settings > Identity. Set the (system assigned) managed identity to "On". Then save and copy the Object ID.
+3. Go to your key vault > Access policies and create a new policy with the 'Get' secret permission. Next, in the 'Principal' field, paste the object ID and select your ACI.
+
+This allows your container instance to access the key vault by means of a Managed Identity.
+
