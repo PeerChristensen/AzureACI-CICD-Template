@@ -10,7 +10,7 @@ print("Connecting to key vault")
 keyvault_uri <- "https://{keyvault-name}.vault.azure.net/"
 vault <- key_vault(keyvault_uri, as_managed_identity=TRUE)
 
-access_key <- vault$secrets$get("ACCESSKEYSA")$value
+access_key <- vault$secrets$get("{access-key-name}")$value
 
 # connect to blob
 print("Connecting to blob container")
