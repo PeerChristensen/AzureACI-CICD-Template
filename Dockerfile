@@ -13,11 +13,10 @@ libcurl4-openssl-dev \
 libssl-dev
 
 ## copy files
-#COPY .Renviron /.Renviron
 COPY script.r /script.r
 
 ## install packages with command
-RUN R -e "install.packages(c('httpuv','AzureStor', 'dplyr', 'readr', 'AzureKeyVault'))"
+RUN R -e "install.packages(c('AzureStor', 'AzureKeyVault', 'dplyr', 'readr'))"
 
 
 ## install packages with R-script
