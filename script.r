@@ -7,7 +7,7 @@ library(AzureKeyVault)
 # connect to kv
 print("Connecting to key vault")
 
-keyvault_uri <- "https://adf-iac-kv.vault.azure.net/"
+keyvault_uri <- "https://{keyvault-name}.vault.azure.net/"
 vault <- key_vault(keyvault_uri, as_managed_identity=TRUE)
 
 access_key <- vault$secrets$get("ACCESSKEYSA")$value
@@ -15,13 +15,13 @@ access_key <- vault$secrets$get("ACCESSKEYSA")$value
 # connect to blob
 print("Connecting to blob container")
 
-endpoint  <- storage_endpoint("https://adfiacsa.blob.core.windows.net",
+endpoint  <- storage_endpoint("https://{storage-account-name}.blob.core.windows.net",
                    key = access_key)
 
-container <- storage_container(endpoint, "input")
+input_container <- storage_container(endpoint, "input")
 
 input_file_name <- "input_data.csv"
-storage_download(container, "input_data.csv", input_file_name, overwrite=T)
+storage_download(input_container, input_file_name, input_file_name, overwrite=T)
 
 df <- read_csv(input_file_name)
 head(df)
@@ -33,10 +33,10 @@ output_file_name <- "output_data.csv"
 
 write_csv(df, output_file_name)
 
-container <- storage_container(endpoint, "output")
+output_container <- storage_container(endpoint, "output")
 
 storage_upload(
-  container,
+  output_container,
   src = output_file_name,
-  dest = "output_data.csv"
+  dest = output_file_name
 )
