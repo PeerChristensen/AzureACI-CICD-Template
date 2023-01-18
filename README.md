@@ -19,6 +19,8 @@ Commits to 'main' triggers a pipeline run. It may also be triggered manually.
 
 If using RStudio, the simplest approach might be to create a new project via version control.
 
+*Should this approach fail, you may not have the necessary permissions to clone repos within the organisation. In that case, you may need to generate personal access token (PAT) and use the `git clone <repo-url>` command from a terminal.*
+
 1. Go to File > New Project > Version Control > Git
 2. Paste in the url for this repo and provide your own name for the project
 3. Click Create Project
@@ -42,15 +44,14 @@ Note that the GitHub Actions workflow, which builds and deploys your Docker cont
 
 ### Required code changes
 
-Besides developing an R script, you will need to modify the following files:
-
-- Dockerfile
+- R script
+   1. The first few lines of the sample R script shows how to connect to blob storage and retrieving a file. Make sure to change the resource names and file names as needed.
+   2. Simillarly, at the bottom of the script, sample code shows how to upload a file to blob storage.  - Dockerfile
    1. Uncomment the line with the 'install.packages()' command **OR** use the script called install.packages.r to install the required packages.
    2. Make sure that COPY, RUN and CMD commands refer to the correct filename, e.g. if you call your main script something else than script.r.
 - .github/workflows/workflow.yml
    1. set RESOURCEGROUP_NAME: name-of-your-resource group
-   2. set REGISTRY_NAME: containerregistryname
-      1. Note that is has to be lower case letters only
+   2. set REGISTRY_NAME: containerregistryname. Note that is has to be lower case letters only
    3. set SHORT_NAME: contregname (e.g.)
 
 ### Connecting GitHub to Azure
