@@ -48,9 +48,9 @@ Note that the GitHub Actions workflow, which builds and deploys your Docker cont
    1. The first few lines of the sample R script shows how to connect to blob storage and retrieving a file. Make sure to change the resource names and file names as needed.
    2. Simillarly, at the bottom of the script, sample code shows how to upload a file to blob storage.
    3. For local development, omit the code used to connect to your key vault and provide the access key directly. However, *do not* expose this key by committing it to Git.
- - Dockerfile
-   4. Uncomment the line with the 'install.packages()' command **OR** use the script called install.packages.r to install the required packages.
-   5. Make sure that COPY, RUN and CMD commands refer to the correct filename, e.g. if you call your main script something else than script.r.
+- Dockerfile
+   1. Uncomment the line with the 'install.packages()' command **OR** use the script called install.packages.r to install the required packages.
+   2. Make sure that COPY, RUN and CMD commands refer to the correct filename, e.g. if you call your main script something else than script.r.
 - .github/workflows/workflow.yml
    1. set RESOURCEGROUP_NAME: name-of-your-resource group
    2. set REGISTRY_NAME: containerregistryname. Note that is has to be lower case letters only
