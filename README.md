@@ -71,7 +71,7 @@ The value for "id" in the JSON output will be your subscription id.
 
 ```
 az ad sp create-for-rbac \
-      --name "gh-actions-aci-test" \
+      --name "appName" \
       --role contributor \
       --scopes /subscriptions/<your-subscription-id>/resourceGroups/<your-resource-group-name> \
       --sdk-auth
