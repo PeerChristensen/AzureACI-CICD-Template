@@ -27,7 +27,7 @@ If using RStudio, the simplest approach might be to create a new project via ver
 4. Open a terminal in RStudio (it should open in the current working directory) and run the following commands:
 
 ```
-git remote set-url origin https://github.com/PeerChristensen/testr.git
+git remote set-url origin <repo-url>
 git push
 ```
 
