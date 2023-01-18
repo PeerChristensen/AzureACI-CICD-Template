@@ -11,7 +11,7 @@ The CICD pipline does the following:
 2. Build a Docker image running the provided R script
 3. Push the image to the registry
 
-Commits to 'main' triggers a pipeline run. It may also be triggered manually.
+Commits to 'main' trigger a pipeline run. It may also be triggered manually.
 
 ## Getting started
 
