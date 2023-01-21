@@ -1,0 +1,63 @@
+name: Deploy ACI
+
+on: 
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      resource_group:
+        required: true
+        type: string
+      acr_name:
+        required: true
+        type: string
+      short_name:
+        required: true
+        type: string
+      aci_name:
+        required: true
+        type: string
+
+    secrets:
+      azure_credentials:
+        required: true
+
+
+jobs:
+  deploy-aci:
+    name: Deploy ACI
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.azure_credentials }}
+      - run: |
+          export username=$(az acr credential show --name ${{ inputs.acr_name }} --query 'username' --output tsv)
+          echo "::set-output name=acr_username::$username"
+        name: 'Get ACR username'
+        id: acr_username_step  
+      - run: |                   
+          password=$(az acr credential show --name ${{ inputs.acr_name }} --query 'passwords[0].value' --output tsv)
+          echo "::set-output name=acr_password::$password"
+        name: 'Get ACR Password'
+        id: acr_password_step
+      - name: 'Deploy to Azure Container Instances'
+        uses: 'azure/aci-deploy@v1'
+        with:
+          resource-group: ${{ inputs.resource_group }}
+          dns-name-label: ${{ inputs.resource_group }}${{ github.run_number }}
+          image: ${{ inputs.acr_name }}.azurecr.io/${{ inputs.short_name }}-${{ inputs.environment }}-image:${{ github.run_number }}
+          registry-login-server: '${{ inputs.acr_name }}.azurecr.io'
+          registry-username: ${{ steps.acr_username_step.outputs.acr_username }}
+          registry-password: ${{ steps.acr_password_step.outputs.acr_password }}
+          name: ${{ inputs.aci_name }}
+          location: 'west europe'
+
+    outputs:
+      acr_username: ${{ steps.acr_username_step.outputs.acr_username }}
+      acr_password: ${{ steps.acr_password_step.outputs.acr_password }}
+
+      
