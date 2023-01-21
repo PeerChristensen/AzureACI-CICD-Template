@@ -3,9 +3,10 @@ name: Deploy container registry and docker image
 concurrency: container-deploy-workflow
 
 env:
-  RESOURCEGROUP_NAME: adf-iac
-  REGISTRY_NAME: adfiacacrtest
-  SHORT_NAME: adfiacacrtest
+  RESOURCEGROUP_NAME: my-rg
+  REGISTRY_NAME: my-cr
+  SHORT_NAME: mycr
+  ACI_NAME: my-ci
 
 permissions:
   id-token: write
@@ -24,6 +25,7 @@ jobs:
       resource_group: ${{ env.RESOURCEGROUP_NAME }}
       acr_name: ${{ env.REGISTRY_NAME }}
       short_name: ${{ env.SHORT_NAME }}
+      aci_name: ${{ env.ACI_NAME }}
     steps:
       - run: echo "Exposing env vars"
 
@@ -49,6 +51,24 @@ jobs:
       build_number: ${{ github.run_number }}
     secrets:
       azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+  deploy-aci:
+    needs: [vars, deploy-acr, build-push-container]
+    uses: ./.github/workflows/deploy_aci.yml
+    if: github.ref == 'refs/heads/main'
+    with:
+      environment: prod
+      acr_name: ${{ needs.vars.outputs.acr_name }}
+      short_name: ${{ needs.vars.outputs.short_name }}
+      aci_name: ${{ needs.vars.outputs.aci_name }}
+    secrets:
+      azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+
+
+
+
+
 
 
 
