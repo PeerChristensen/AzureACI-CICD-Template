@@ -3,9 +3,10 @@ name: Deploy container registry and docker image
 concurrency: container-deploy-workflow
 
 env:
-  RESOURCEGROUP_NAME: adf-iac
-  REGISTRY_NAME: adfiacacrtest
-  SHORT_NAME: adfiacacrtest
+  RESOURCEGROUP_NAME: my-rg
+  REGISTRY_NAME: my-cr
+  SHORT_NAME: mycr
+  ACI_NAME: my-ci
 
 permissions:
   id-token: write
@@ -24,6 +25,7 @@ jobs:
       resource_group: ${{ env.RESOURCEGROUP_NAME }}
       acr_name: ${{ env.REGISTRY_NAME }}
       short_name: ${{ env.SHORT_NAME }}
+      aci_name: ${{ env.ACI_NAME }}
     steps:
       - run: echo "Exposing env vars"
 
