@@ -1,6 +1,6 @@
-name: Deploy container registry and instance - test
+name: Deploy ACR and ACI - test
 
-concurrency: container-deploy-workflow
+concurrency: container-deploy-workflow-test
 
 env:
   RESOURCEGROUP_NAME: my-rg

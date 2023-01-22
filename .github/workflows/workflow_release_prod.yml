@@ -1,6 +1,6 @@
-name: Deploy container registry and instance - prod
+name: Deploy ACR and ACI - prod
 
-concurrency: container-deploy-workflow
+concurrency: container-deploy-workflow-prod
 
 env:
   RESOURCEGROUP_NAME: my-rg
