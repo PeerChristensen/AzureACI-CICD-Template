@@ -1,4 +1,4 @@
-name: Deploy container registry and docker image
+name: Deploy container registry and instance - prod
 
 concurrency: container-deploy-workflow
 
