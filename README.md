@@ -4,14 +4,16 @@
 
 ## Description
 
-This is a template repo that nay serve as a starting point for new workflows based on R scripts and allow for the migration of current jobs to Azure. With very little configuration, the continuous integration and deployment of containerised R code is easily automated.
+This is a template repo that nay serve as a starting point for new workflows based on R scripts and allow for the migration of applications to Azure. With very little configuration, the continuous integration and deployment of containerised R code is easily automated.
 
 The CICD pipline does the following:
 1. Deploy a container registry
 2. Build a Docker image running the provided R script
 3. Push the image to the registry
 
-Commits to 'main' trigger a pipeline run. It may also be triggered manually.
+Commits to 'main' triggers a workflow run that deploys a container image for testing. It may also be triggered manually. 
+
+A second workflow deploying a container instance for production use may be triggered manually. 
 
 ## Getting started
 
@@ -19,7 +21,7 @@ Commits to 'main' trigger a pipeline run. It may also be triggered manually.
 
 If using RStudio, the simplest approach might be to create a new project via version control.
 
-*Should this approach fail, you may not have the necessary permissions to clone repos within the organisation. In that case, you may need to generate personal access token (PAT) and use the `git clone <repo-url>` command from a terminal.*
+*Should this fail, you may not have the necessary permissions to clone repos within the organisation. You may need to generate personal access token (PAT) and use the `git clone <repo-url>` command from a terminal.*
 
 1. Go to File > New Project > Version Control > Git
 2. Paste in the url for this repo and provide your own name for the project
@@ -27,7 +29,7 @@ If using RStudio, the simplest approach might be to create a new project via ver
 4. Open a terminal in RStudio (it should open in the current working directory) and run the following commands:
 
 ```
-git remote set-url origin <repo-url>
+git remote set-url origin <url-for-this-repo>
 git push
 ```
 
@@ -44,17 +46,20 @@ Note that the GitHub Actions workflow, which builds and deploys your Docker cont
 
 ### Required code changes
 
+Make sure to modify the following files:
+
 - R script
    1. The first few lines of the sample R script shows how to connect to blob storage and retrieving a file. Make sure to change the resource names and file names as needed.
-   2. Simillarly, at the bottom of the script, sample code shows how to upload a file to blob storage.
-   3. For local development, omit the code used to connect to your key vault and provide the access key directly. However, *do not* expose this key by committing it to Git.
+   2. Simillarly, at the bottom of the script, sample code shows how to upload a file to blob storage.  
 - Dockerfile
    1. Uncomment the line with the 'install.packages()' command **OR** use the script called install.packages.r to install the required packages.
    2. Make sure that COPY, RUN and CMD commands refer to the correct filename, e.g. if you call your main script something else than script.r.
 - .github/workflows/workflow.yml
    1. set RESOURCEGROUP_NAME: name-of-your-resource group
-   2. set REGISTRY_NAME: containerregistryname. Note that is has to be lower case letters only
+   2. set REGISTRY_NAME: containerregistryname
+      1. Note that is has to be lower case letters only
    3. set SHORT_NAME: contregname (e.g.)
+   4. set ACI_NAME: aci-name-test or aci-name-prod
 
 ### Connecting GitHub to Azure
 
@@ -72,7 +77,7 @@ The value for "id" in the JSON output will be your subscription id.
 
 ```
 az ad sp create-for-rbac \
-      --name "appName" \
+      --name "appname" \
       --role contributor \
       --scopes /subscriptions/<your-subscription-id>/resourceGroups/<your-resource-group-name> \
       --sdk-auth
@@ -95,9 +100,15 @@ docker run imagename
 
 ## Post deployment setup
 
-1. Create a Container Instance in the Azure portal based on the uploaded image. 
-2. After it's successfully deployed, go to the new ACI resource > Settings > Identity. Set the (system assigned) managed identity to "On". Then save and copy the Object ID.
-3. Go to your key vault > Access policies and create a new policy with the 'Get' secret permission. Next, in the 'Principal' field, paste the object ID and select your ACI.
+1. After it's successfully deployed, go to the new ACI resource > Settings > Identity. Set the (system assigned) managed identity to "On". Then save and copy the Object ID.
+2. Go to your key vault > Access policies and create a new policy with the 'Get' secret permission. Next, in the 'Principal' field, paste the object ID and select your ACI.
 
 This allows your container instance to access the key vault by means of a Managed Identity.
 
+## Checking logs
+
+This can be done using the portal or with Azure CLI:
+
+```
+az container logs --resource-group your-rg-name --name  aci-name
+```
