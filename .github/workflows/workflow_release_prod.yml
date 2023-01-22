@@ -6,7 +6,7 @@ env:
   RESOURCEGROUP_NAME: my-rg
   REGISTRY_NAME: my-cr
   SHORT_NAME: mycr
-  ACI_NAME: my-ci
+  ACI_NAME: my-ci-prod
   ENVIRONMENT: prod
 
 permissions:
