@@ -54,7 +54,7 @@ Make sure to modify the following files:
 - Dockerfile
    1. Uncomment the line with the 'install.packages()' command **OR** use the script called install.packages.r to install the required packages.
    2. Make sure that COPY, RUN and CMD commands refer to the correct filename, e.g. if you call your main script something else than script.r.
-- .github/workflows/workflow.yml
+- .github/workflows/workflow.yml and .github/workflows/workflow_release_prod.yml
    1. set RESOURCEGROUP_NAME: name-of-your-resource group
    2. set REGISTRY_NAME: containerregistryname
       1. Note that is has to be lower case letters only
@@ -97,6 +97,10 @@ docker run imagename
 ```
 
  The -t (tag) parameter lets you provide a name for you Docker image. Make sure you're running these commands from the directory where the Dckerfile is located. The dot (.) indicates that the files and folders used to build the image are in the current directory.
+
+## Deploying for test and production
+
+The GitHub Actions workflow is set up such that test releases are triggered by commits to the main branch. The test release wortkflow may also be triggered manually. Deployment of container instances for production use can only be triggered manually. This setup is intended as a safeguard allowing users to test that the test ACI runs correctly before deploying the same changes that go into production.
 
 ## Post deployment setup
 
