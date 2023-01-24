@@ -1,7 +1,5 @@
 # CICD Template for Docker Images running R jobs and Azure container registries
 
-[![Deploy container registry and docker image](https://github.com/PeerChristensen/AzureDocker-CICD-Template/actions/workflows/workflow.yml/badge.svg)](https://github.com/PeerChristensen/AzureDocker-CICD-Template/actions/workflows/workflow.yml)
-
 ## Description
 
 This is a template repo that nay serve as a starting point for new workflows based on R scripts and allow for the migration of applications to Azure. With very little configuration, the continuous integration and deployment of containerised R code is easily automated.
