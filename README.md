@@ -102,17 +102,19 @@ docker run imagename
 
 The GitHub Actions workflow is set up such that test releases are triggered by commits to the main branch. The test release wortkflow may also be triggered manually. Deployment of container instances for production use can only be triggered manually. This setup is intended as a safeguard allowing users to test that the test ACI runs correctly before deploying the same changes that go into production.
 
-## Post deployment setup
-
-1. After it's successfully deployed, go to the new ACI resource > Settings > Identity. Set the (system assigned) managed identity to "On". Then save and copy the Object ID.
-2. Go to your key vault > Access policies and create a new policy with the 'Get' secret permission. Next, in the 'Principal' field, paste the object ID and select your ACI.
-
-This allows your container instance to access the key vault by means of a Managed Identity.
-
-## Checking logs
+### Checking logs
 
 This can be done using the portal or with Azure CLI:
 
 ```
 az container logs --resource-group your-rg-name --name  aci-name
 ```
+
+### Post deployment setup
+
+1. After it's successfully deployed, go to the new ACI resource > Settings > Identity. Set the (system assigned) managed identity to "On". Then save and copy the Object ID.
+2. Go to your key vault > Access policies and create a new policy with the 'Get' secret permission. Next, in the 'Principal' field, paste the object ID and select your ACI.
+
+This allows your container instance to access the key vault by means of a Managed Identity.
+
+
