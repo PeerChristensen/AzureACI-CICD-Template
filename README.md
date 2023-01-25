@@ -48,16 +48,16 @@ Make sure to modify the following files:
 
 - R script
    1. The first few lines of the sample R script shows how to connect to blob storage and retrieving a file. Make sure to change the resource names and file names as needed.
-   2. Simillarly, at the bottom of the script, sample code shows how to upload a file to blob storage.  
+   2. Simillarly, at the bottom of the script, sample code shows how to upload a file to blob storage.
+  
 - Dockerfile
    1. Uncomment the line with the 'install.packages()' command **OR** use the script called install.packages.r to install the required packages.
    2. Make sure that COPY, RUN and CMD commands refer to the correct filename, e.g. if you call your main script something else than script.r.
+
 - .github/workflows/workflow.yml and .github/workflows/workflow_release_prod.yml
-   1. set RESOURCEGROUP_NAME: name-of-your-resource group
-   2. set REGISTRY_NAME: containerregistryname
-      1. Note that is has to be lower case letters only
-   3. set SHORT_NAME: contregname (e.g.)
-   4. set ACI_NAME: aci-name-test or aci-name-prod
+   1. set the correct values for all variables under `ENV:`
+
+*Note that if you're changing if you're changing the cpu or memory settings, you will need to first delete the ACI(s) before running the workflow.*
 
 ### Connecting GitHub to Azure
 
