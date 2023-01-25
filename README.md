@@ -61,7 +61,7 @@ Make sure to modify the following files:
 
 ### Connecting GitHub to Azure
 
-For the pipeline to work, GitHub must be granted permission to make changes to your Azure environment. This can be donw using the Azure CLI.
+For the workflow to work, GitHub must be granted permission to make changes to your Azure environment. This can be donw using the Azure CLI.
 
 1. First, login to Azure. The command opens a browser window with the Azure login page.
 
@@ -107,6 +107,14 @@ The -t (tag) parameter lets you provide a name for you Docker image. Make sure y
 ## Deploying for test and production
 
 The GitHub Actions workflow is set up such that test releases are triggered by commits to the main branch. The test release wortkflow may also be triggered manually. Deployment of container instances for production use can only be triggered manually. This setup is intended as a safeguard allowing users to test that the test ACI runs correctly before deploying the same changes that go into production.
+
+### Deployment workflow
+
+The deployment workflow involves the following key actions performed in sequence:
+1. Deploy the ACR
+2. Build and push DOcker image to the ACR
+3. Deploy an ACI
+4. Update the ACI with permission to access a KV
 
 ### Checking logs
 
