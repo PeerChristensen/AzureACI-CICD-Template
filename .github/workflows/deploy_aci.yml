@@ -18,6 +18,12 @@ on:
       aci_name:
         required: true
         type: string
+      cpu:
+        required: true
+        type: string
+      memory:
+        required: true
+        type: string
 
     secrets:
       azure_credentials:
@@ -55,9 +61,10 @@ jobs:
           registry-password: ${{ steps.acr_password_step.outputs.acr_password }}
           name: ${{ inputs.aci_name }}
           location: 'west europe'
+          cpu: ${{ inputs.cpu }}
+          memory: ${{ inputs.memory }}
+          restart-policy: 'OnFailure'
 
     outputs:
       acr_username: ${{ steps.acr_username_step.outputs.acr_username }}
       acr_password: ${{ steps.acr_password_step.outputs.acr_password }}
-
-      

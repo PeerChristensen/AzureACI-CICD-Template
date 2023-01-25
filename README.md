@@ -76,10 +76,12 @@ The value for "id" in the JSON output will be your subscription id.
 ```
 az ad sp create-for-rbac \
       --name "appname" \
-      --role contributor \
+      --role Owner \
       --scopes /subscriptions/<your-subscription-id>/resourceGroups/<your-resource-group-name> \
       --sdk-auth
 ```
+
+*Note that using the 'Owner' role is not considered best practice as it allows the SP to perform much more than we actually need. You may therefore choose to create a more restricted custom role and assign it to the SP. This may be based on the Contributor role with added permissions to assign managed identities.*
 
 3. Copy the JSON output.
 4. In your GitHub repo, go to Settings > Secrets and variables > Actions
@@ -94,7 +96,7 @@ docker build -t imagename .
 docker run imagename
 ```
 
- The -t (tag) parameter lets you provide a name for you Docker image. Make sure you're running these commands from the directory where the Dckerfile is located. The dot (.) indicates that the files and folders used to build the image are in the current directory.
+The -t (tag) parameter lets you provide a name for you Docker image. Make sure you're running these commands from the directory where the Dckerfile is located. The dot (.) indicates that the files and folders used to build the image are in the current directory.
 
 ## Deploying for test and production
 
@@ -107,12 +109,3 @@ This can be done using the portal or with Azure CLI:
 ```
 az container logs --resource-group your-rg-name --name  aci-name
 ```
-
-### Post deployment setup
-
-1. After it's successfully deployed, go to the new ACI resource > Settings > Identity. Set the (system assigned) managed identity to "On". Then save and copy the Object ID.
-2. Go to your key vault > Access policies and create a new policy with the 'Get' secret permission. Next, in the 'Principal' field, paste the object ID and select your ACI.
-
-This allows your container instance to access the key vault by means of a Managed Identity.
-
-

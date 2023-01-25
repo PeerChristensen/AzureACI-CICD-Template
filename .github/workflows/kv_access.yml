@@ -1,0 +1,104 @@
+name: Enable ACI access to KV
+  
+on: 
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      resource_group:
+        required: true
+        type: string
+      acr_name:
+        required: true
+        type: string
+      aci_name:
+        required: true
+        type: string
+      build_number:
+        required: true
+        type: string
+      short_name:
+        required: true
+        type: string
+      kv_name:
+        required: true
+        type: string
+      cpu:
+        required: true
+        type: string
+      memory:
+        required: true
+        type: string
+    secrets:
+      azure_credentials:
+        required: true
+  
+jobs:
+  access-to-kv:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.azure_credentials }}
+          
+      - run: |
+          export rgID=$(az group show --name rcloud-test-rg --query 'id' --output tsv)
+          echo "::set-output name=rg_id::$rgID"
+        name: 'Get RG id'
+        id: rg_id_step  
+        
+      - run: |
+          export acrPW=$(az acr credential show --name ${{ inputs.acr_name }} --query 'passwords[0].value' --output tsv)
+          echo "::set-output name=acr_password::$acrPW"
+        name: 'Get ACR password'
+        id: acr_password_step
+
+      - run: |
+          az container stop --name ${{ inputs.aci_name }} --resource-group ${{ inputs.resource_group }} 
+        name: 'Stop container before'
+        id: stop_aci_step1
+        
+      - run: |
+          az container create \
+            --resource-group ${{ inputs.resource_group }} \
+            --dns-name-label ${{ inputs.resource_group }}${{ github.run_number }} \
+            --name ${{ inputs.aci_name }} \
+            --image ${{ inputs.acr_name }}.azurecr.io/${{ inputs.short_name }}-${{ inputs.environment }}-image:${{ inputs.build_number }} \
+            --registry-login-server ${{ inputs.acr_name }}.azurecr.io \
+            --assign-identity --scope ${{ steps.rg_id_step.outputs.rg_id }} \
+            --registry-password ${{ steps.acr_password_step.outputs.acr_password }} \
+            --registry-username ${{ inputs.acr_name }} \
+            --restart-policy OnFailure \
+            --cpu ${{ inputs.cpu }} \
+            --memory ${{ inputs.memory }}
+        name: 'Enable managed identity'
+        id: enable_identity_step
+          
+      - run: |
+          az container stop --name ${{ inputs.aci_name }} --resource-group ${{ inputs.resource_group }} 
+        name: 'Stop container after'
+        id: stop_aci_step2
+        
+      - run: |
+          export spID=$(az container show \
+            --resource-group ${{ inputs.resource_group }}  \
+            --name ${{ inputs.aci_name }} \
+            --query identity.principalId --out tsv)
+          echo "::set-output name=sp_id::$spID"
+        name: 'Get Service Principal (obj id)'
+        id: get_sp_step
+        
+      - run: |
+          az keyvault set-policy \
+            --name ${{ inputs.kv_name }} \
+            --resource-group ${{ inputs.resource_group }}  \
+            --object-id ${{ steps.get_sp_step.outputs.sp_id }} \
+            --secret-permissions get
+            
+    outputs:
+      rg_id: ${{ steps.rg_id_step.outputs.rg_id }}
+      acr_password: ${{ steps.acr_password_step.outputs.acr_password }}
+      sp_id: ${{ steps.get_sp_step.outputs.rg_id_step.sp_id }}
