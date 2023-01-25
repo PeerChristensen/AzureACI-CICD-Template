@@ -81,6 +81,12 @@ az ad sp create-for-rbac \
       --sdk-auth
 ```
 
+*Note: if you get an error saying "No connection adapters were found...", run the command below and try again.*
+
+```
+export MSYS_NO_PATHCONV=1
+```
+
 *Note that using the 'Owner' role is not considered best practice as it allows the SP to perform much more than we actually need. You may therefore choose to create a more restricted custom role and assign it to the SP. This may be based on the Contributor role with added permissions to assign managed identities.*
 
 3. Copy the JSON output.
