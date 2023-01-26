@@ -71,7 +71,7 @@ az login
 
 The value for "id" in the JSON output will be your subscription id.
 
-2. Then, run the following command to create a Service Principal with contributor permissions to your resource group:
+2. Then, run the following command to create a Service Principal with access to your resource group. Please see the note below regarding permissions and roles.
 
 ```
 az ad sp create-for-rbac \
