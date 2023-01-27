@@ -45,7 +45,7 @@ jobs:
           creds: ${{ secrets.azure_credentials }}
           
       - run: |
-          export rgID=$(az group show --name rcloud-test-rg --query 'id' --output tsv)
+          export rgID=$(az group show --name ${{ inputs.resource_group }} --query 'id' --output tsv)
           echo "::set-output name=rg_id::$rgID"
         name: 'Get RG id'
         id: rg_id_step  
