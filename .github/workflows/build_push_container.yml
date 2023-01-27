@@ -3,6 +3,9 @@ name: Build and push image
 on: 
   workflow_call:
     inputs:
+      resource_group:
+        required: true
+        type: string
       environment:
         required: true
         type: string
@@ -32,13 +35,13 @@ jobs:
           creds: ${{ secrets.azure_credentials }}
       - run: echo "${{ inputs.acr_name }}"
       - run: |
-          export username=$(az acr credential show --name ${{ inputs.acr_name }} --query 'username' --output tsv)
+          export username=$(az acr credential show --name ${{ inputs.acr_name }} --resource-group ${{ inputs.resource_group }} --query 'username' --output tsv)
           echo "::set-output name=acr_username::$username"
         name: 'Get ACR username'
         id: acr_username_step
       
       - run: |                   
-          password=$(az acr credential show --name ${{ inputs.acr_name }} --query 'passwords[0].value' --output tsv)
+          password=$(az acr credential show --name ${{ inputs.acr_name }} --resource-group ${{ inputs.resource_group }} --query 'passwords[0].value' --output tsv)
           echo "::set-output name=acr_password::$password"
         name: 'Get ACR Password'
         id: acr_password_step

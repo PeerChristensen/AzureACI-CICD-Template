@@ -50,6 +50,7 @@ jobs:
     uses: ./.github/workflows/build_push_container.yml
     if: github.ref == 'refs/heads/main'
     with:
+      resource_group: ${{ needs.vars.outputs.resource_group }} 
       environment: ${{ needs.vars.outputs.environment }}
       acr_name: ${{ needs.vars.outputs.acr_name }}
       short_name: ${{ needs.vars.outputs.short_name }}
