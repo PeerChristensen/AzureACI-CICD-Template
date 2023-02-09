@@ -63,7 +63,7 @@ jobs:
           location: 'west europe'
           cpu: ${{ inputs.cpu }}
           memory: ${{ inputs.memory }}
-          restart-policy: 'OnFailure'
+          restart-policy: 'Never'
 
     outputs:
       acr_username: ${{ steps.acr_username_step.outputs.acr_username }}
