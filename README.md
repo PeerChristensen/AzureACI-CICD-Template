@@ -21,10 +21,11 @@ If using RStudio, the simplest approach might be to create a new project via ver
 
 *Should this fail, you may not have the necessary permissions to clone repos within the organisation. You may need to generate personal access token (PAT) and use the `git clone <repo-url>` command from a terminal.*
 
-1. Go to File > New Project > Version Control > Git
-2. Paste in the url for this repo and provide your own name for the project
-3. Click Create Project
-4. Open a terminal in RStudio (it should open in the current working directory) and run the following commands:
+1. Create a new GitHub repo using this repo as a template
+2. Go to File > New Project > Version Control > Git
+3. Paste in the url for your new repo
+4. Click Create Project
+5. Open a terminal in RStudio (it should open in the current working directory) and run the following commands:
 
 ```
 git remote set-url origin <url-for-this-repo>
