@@ -1,4 +1,4 @@
-# CICD Template for Azure Container Instances
+# CI/CD Template for Azure Container Instances
 
 ## Description
 
