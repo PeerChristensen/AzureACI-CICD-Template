@@ -1,4 +1,4 @@
-# CICD Template for Docker Images running R jobs and Azure container registries
+# CICD Template for Azure Container Instances
 
 ## Description
 
