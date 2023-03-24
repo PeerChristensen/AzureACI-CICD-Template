@@ -46,13 +46,13 @@ jobs:
           
       - run: |
           export rgID=$(az group show --name ${{ inputs.resource_group }} --query 'id' --output tsv)
-          echo "::set-output name=rg_id::$rgID"
+          echo "rg_id=$rgID" >> $GITHUB_OUTPUT
         name: 'Get RG id'
         id: rg_id_step  
         
       - run: |
           export acrPW=$(az acr credential show --name ${{ inputs.acr_name }} --resource-group ${{ inputs.resource_group }} --query 'passwords[0].value' --output tsv)
-          echo "::set-output name=acr_password::$acrPW"
+          echo "acr_password=$acrPW" >> $GITHUB_OUTPUT
         name: 'Get ACR password'
         id: acr_password_step
 
@@ -71,7 +71,7 @@ jobs:
             --assign-identity --scope ${{ steps.rg_id_step.outputs.rg_id }} \
             --registry-password ${{ steps.acr_password_step.outputs.acr_password }} \
             --registry-username ${{ inputs.acr_name }} \
-            --restart-policy OnFailure \
+            --restart-policy Never \
             --cpu ${{ inputs.cpu }} \
             --memory ${{ inputs.memory }}
         name: 'Enable managed identity'
@@ -87,7 +87,7 @@ jobs:
             --resource-group ${{ inputs.resource_group }}  \
             --name ${{ inputs.aci_name }} \
             --query identity.principalId --out tsv)
-          echo "::set-output name=sp_id::$spID"
+          echo "sp_id=$spID" >> $GITHUB_OUTPUT
         name: 'Get Service Principal (obj id)'
         id: get_sp_step
         
